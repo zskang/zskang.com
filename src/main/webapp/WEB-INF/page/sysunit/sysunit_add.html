@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>系统机构表</title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">部门名称</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="sysUnit.name" placeholder=""/>
+		    </div>
+		</div>
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label">部门代码</div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.code" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label">联系人</div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.contact" placeholder="联系人"/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">联系电话</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="sysUnit.mobile" placeholder=""/>
+		    </div>
+		</div>
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label">地址</div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.address" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">邮箱</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="sysUnit.email" placeholder=""/>
+		    </div>
+		</div>
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label">网址</div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.web" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label">上级部门</div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.parentid" placeholder="" />-->
+		    <!--</div>-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label">下级部门</div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.haschildren" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label"></div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.system" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label"></div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.enabled" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label"></div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.createtime" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		   	<!--<div class="col-sm-2 control-label">类型</div>-->
+		   	<!--<div class="col-sm-10">-->
+		      <!--<input type="text" class="form-control" v-model="sysUnit.type" placeholder=""/>-->
+		    <!--</div>-->
+		<!--</div>-->
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/sysunit/sysunit_add.js?_${date.systemTime}"></script>
+</body>
+</html>

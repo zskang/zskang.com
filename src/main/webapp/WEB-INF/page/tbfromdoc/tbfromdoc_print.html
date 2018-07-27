@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+    <div class="panel-heading" style="text-align: right">
+        <input type="button" class="btn btn-primary" @click="print" value="打印"/>
+        &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+    </div>
+    <!--startprint-->
+    <div id="printcontent">
+        <style  type="text/css">     /* @media print 为打印时适应的样式表*/
+        @media print   {
+            body   {
+                font-size:   12px;
+                line-height:115%;
+                margin:0pt 0pt 10pt;
+                orphans:0;
+                text-align:justify;
+                font-family:Calibri;
+                color:#ff0000;
+              }
+        }
+        </style>
+        <p style="font-size:10.5pt; line-height:115%; margin:0pt 0pt 10pt; orphans:0; text-align:justify; widows:0">
+            <span style="font-family:Calibri; font-size:10.5pt">&#xa0;</span>
+        </p>
+        <table cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin-left:400pt; width:320.8pt">
+            <tr style="height:0pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:60.05pt">
+                    <p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0">
+                        <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline;text-align: center">0034</span>
+                    </p>
+                </td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:60.05pt">
+                    <p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0">
+                        <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline;text-align: center" id="currentYear"></span>
+                    </p>
+                </td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:60.05pt">
+                    <p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0">
+                        <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline">&#xa0;</span>
+                    </p>
+                </td>
+            </tr>
+            <tr style="height:0pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:60.05pt">
+                    <p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0">
+                        <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline">&#xa0;</span>
+                    </p>
+                </td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:60.05pt">
+                    <p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0">
+                        <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline;text-align: center" id="storageperiod">20年</span>
+                    </p>
+                </td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:60.05pt">
+                    <p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0">
+                        <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline">&#xa0;</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p style="font-size:22pt; line-height:115%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+            <span style="color:#ff0000; font-family:宋体; font-size:22pt; font-weight:bold">&#xa0;</span>
+        </p>
+        <p style="font-size:22pt; line-height:115%; margin:0pt 0pt 10pt; margin-left:140pt;orphans:0;  widows:0">
+            <span style="color:#ff0000; font-family:宋体; font-size:22pt; font-weight:bold;margin-left:150pt;">亳州市教育局文件处理单</span>
+        </p>
+        <!--<p style="font-size:10.5pt; line-height:115%; margin:0pt 0pt 10pt; orphans:0; text-align:justify; widows:0">-->
+        <!--<span style="font-family:Calibri; font-size:10.5pt">&#xa0;</span>-->
+        <!--</p>-->
+        <table cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin-left:50pt; width:717.8pt">
+            <tr style="height:56.7pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">收文日期</span>
+                </p></td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:60.2pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline" id="receiveddate">2017/1/5</span>
+                    <!--<input style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline" v-model="tbFromDoc.receiveddate">2017/1/5</input>-->
+                </p></td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">文件序号</span>
+                </p></td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:60.2pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline" id="filesequence">5</span>
+                </p></td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">来文单位</span>
+                </p></td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:94.15pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="font-family:宋体; font-size:10.5pt; vertical-align:baseline" id="fromdepartment">安徽省教育厅</span>
+                </p></td>
+            </tr>
+            <tr style="height:56.7pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">来文标题</span>
+                </p></td>
+                <td colspan="3" style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:187.9pt"><p style="font-size:10.5pt; line-height:115%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="font-family:宋体; font-size:10.5pt; vertical-align:baseline" id="subjectword">安徽省教育厅关于确保国家资助资金按时足额发放的通知</span>
+                </p></td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">办文编号</span>
+                </p></td>
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:94.15pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0">
+                    <span style="font-family:宋体; font-size:10.5pt; vertical-align:baseline" id="transactnumber">皖教助[2017]1号</span>
+                </p></td>
+            </tr>
+            <tr style="height:92.2pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">文件呈办意见</span></p></td>
+                <td colspan="5" style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:349.55pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline">&#xa0;</span></p></td>
+            </tr>
+            <tr style="height:144.55pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">领导批示</span></p></td>
+                <td colspan="5" style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:349.55pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline">&#xa0;</span></p></td>
+            </tr>
+            <tr style="height:70.85pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">阅者签名</span></p></td>
+                <td colspan="5" style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:349.55pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline">&#xa0;</span></p></td>
+            </tr>
+            <tr style="height:70.85pt">
+                <td style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:45.9pt"><p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="color:#ff0000; font-family:宋体; font-size:14pt; font-weight:bold; vertical-align:baseline">办理情况</span></p></td>
+                <td colspan="5" style="border-bottom-color:#ff0000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#ff0000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#ff0000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#ff0000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle; width:349.55pt"><p style="font-size:10.5pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="font-family:Calibri; font-size:10.5pt; vertical-align:baseline">&#xa0;</span></p></td>
+            </tr>
+            <tr style="height:0pt">
+                <td style="width:56.7pt; border:none"></td>
+                <td style="width:71pt; border:none"></td>
+                <td style="width:56.7pt; border:none"></td>
+                <td style="width:71pt; border:none"></td>
+                <td style="width:56.7pt; border:none"></td>
+                <td style="width:104.95pt; border:none"></td>
+            </tr>
+        </table>
+        <p style="font-size:10.5pt; line-height:115%; margin:0pt 0pt 10pt; orphans:0; text-align:justify; widows:0">
+            <span style="font-family:Calibri; font-size:10.5pt">&#xa0;</span></p>
+    </div>
+    <!--endprint-->
+    <div class="cnzz" style="display: none;">
+    </div>
+</div>
+<script src="${rc.contextPath}/js/tbfromdoc/tbfromdoc_print.js?_${date.systemTime}"></script>
+</body>
+
+</html>

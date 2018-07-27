@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbFromDocBanliDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TbFromDocBanliEntity">
+		select * from tb_from_doc_banli where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TbFromDocBanliEntity">
+		select * from tb_from_doc_banli 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_from_doc_banli 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TbFromDocBanliEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_from_doc_banli
+		(
+			`from_doc_id`, 
+			`user_id`, 
+			`receivedtime`, 
+			`read`, 
+			`feedback`, 
+			`spare1`, 
+			`spare2`, 
+			`comment`, 
+			`from_user_id`, 
+			`to_user_id`, 
+			`readtime`, 
+			`feedbacktime`, 
+			`sendtime`, 
+			`send`
+		)
+		values
+		(
+			#{fromDocId}, 
+			#{userId}, 
+			#{receivedtime}, 
+			#{read}, 
+			#{feedback}, 
+			#{spare1}, 
+			#{spare2}, 
+			#{comment}, 
+			#{fromUserId}, 
+			#{toUserId}, 
+			#{readtime}, 
+			#{feedbacktime}, 
+			#{sendtime}, 
+			#{send}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TbFromDocBanliEntity">
+		update tb_from_doc_banli 
+		<set>
+			<if test="fromDocId != null">`from_doc_id` = #{fromDocId}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="receivedtime != null">`receivedtime` = #{receivedtime}, </if>
+			<if test="read != null">`read` = #{read}, </if>
+			<if test="feedback != null">`feedback` = #{feedback}, </if>
+			<if test="spare1 != null">`spare1` = #{spare1}, </if>
+			<if test="spare2 != null">`spare2` = #{spare2}, </if>
+			<if test="comment != null">`comment` = #{comment}, </if>
+			<if test="fromUserId != null">`from_user_id` = #{fromUserId}, </if>
+			<if test="toUserId != null">`to_user_id` = #{toUserId}, </if>
+			<if test="readtime != null">`readtime` = #{readtime}, </if>
+			<if test="feedbacktime != null">`feedbacktime` = #{feedbacktime}, </if>
+			<if test="sendtime != null">`sendtime` = #{sendtime}, </if>
+			<if test="send != null">`send` = #{send}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_from_doc_banli where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_from_doc_banli where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

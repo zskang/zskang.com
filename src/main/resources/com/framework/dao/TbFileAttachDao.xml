@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbFileAttachDao">
+
+    <select id="queryObject" resultType="com.framework.entity.TbFileAttachEntity">
+		select * from tb_file_attach where id = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.framework.entity.TbFileAttachEntity">
+        select * from tb_file_attach
+        where ywid=#{uuid} and state=#{state} order by createTime desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+		select count(*) from tb_file_attach where ywid=#{uuid} and state=#{state}
+	</select>
+
+    <insert id="save" parameterType="com.framework.entity.TbFileAttachEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_file_attach
+		(
+			`fileName`, 
+			`filePath`, 
+			`ywId`, 
+			`createTime`, 
+			`fileType`, 
+			`state`
+		)
+		values
+		(
+			#{filename}, 
+			#{filepath}, 
+			#{ywid}, 
+			#{createtime}, 
+			#{filetype}, 
+			#{state}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.framework.entity.TbFileAttachEntity">
+        update tb_file_attach
+        <set>
+            <if test="filename != null">`fileName` = #{filename},</if>
+            <if test="filepath != null">`filePath` = #{filepath},</if>
+            <if test="ywid != null">`ywId` = #{ywid},</if>
+            <if test="createtime != null">`createTime` = #{createtime},</if>
+            <if test="filetype != null">`fileType` = #{filetype},</if>
+            <if test="state != null">`state` = #{state}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from tb_file_attach where id = #{value}
+	</delete>
+
+    <delete id="deleteBatchByUUID">
+		delete from tb_file_attach where  ywid=#{uuid}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from tb_file_attach where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryAll" resultType="com.framework.entity.TbFileAttachEntity">
+		select * from tb_file_attach where ywid=#{ywid}
+	</select>
+
+</mapper>

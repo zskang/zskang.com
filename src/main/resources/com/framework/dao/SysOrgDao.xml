@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.SysOrgDao">
+	<select id="queryObject" resultType="com.framework.entity.SysOrgEntity">
+		select * from sys_unit where
+		id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.SysOrgEntity">
+		select * from sys_unit order by id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from sys_unit
+	</select>
+
+
+	<select id="queryAllOrgs" resultType="com.framework.entity.SysOrgEntity">
+		select * from sys_unit   order by order_num asc
+	</select>
+	
+	<insert id="save" parameterType="com.framework.entity.SysOrgEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_unit
+		(
+		`name`,
+		`code`,
+		`contact`,
+		`address`,
+		`email`,
+		`web`,
+		`mobile`,
+		`enabled`,
+		`parentId`,
+		`hasChildren`,
+		`type`,
+		`create_time`
+		)
+		values
+		(
+		#{name},
+		#{code},
+		#{contact},
+		#{address},
+		#{email},
+		#{web},
+		#{mobile},
+		#{enabled},
+		#{parentId},
+		#{hasChildren},
+		#{type},
+		#{createTime}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.framework.entity.SysOrgEntity">
+		update sys_unit
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="contact != null">`contact` = #{contact}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="web != null">`web` = #{web}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="enabled != null">`enabled` = #{enabled}, </if>
+			<if test="parentId != null">`parentId` = #{parentId}, </if>
+			<if test="hasChildren != null">`hasChildren` = #{hasChildren}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteBatch">
+		delete from sys_unit where parentId in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		;
+		delete from sys_unit where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="queryChildOrgList" resultType="com.framework.entity.SysOrgEntity">
+		select * from sys_unit where
+		parentId = #{value}
+	</select>
+</mapper>

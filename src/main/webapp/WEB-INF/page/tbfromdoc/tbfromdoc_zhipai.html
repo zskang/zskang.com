@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+    <div class="panel-heading"> {{title}}</div>
+    <div class="content-wrap">
+        <div class="wrapper pt20">
+            <form class="form-horizontal" id="app">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group text-center">
+                            <div>
+                                <button type="button" class="btn btn-primary" @click="ok"> 指派</button>
+                                <input type="button" class="btn btn-warning"
+                                       @click="back" value="返回"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" v-model="tbFromDoc.uuid"/>
+                <input type="hidden" class="form-control" v-model="tbFromDoc.fromDocId"/>
+                <input type="hidden" class="form-control" v-model="tbFromDoc.createTime"/>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">来文标题<font color="red">*</font></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="title" name="title"
+                                       v-model="tbFromDoc.title" placeholder="来文标题" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="filesequence" class="col-sm-2 control-label">文件序号</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" v-model="tbFromDoc.filesequence"
+                                       id="filesequence" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="transactnumber" class="col-sm-2 control-label">办文编号<font
+                                    color="red">*</font></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" v-model="tbFromDoc.transactnumber"
+                                       id="transactnumber" placeholder="办文编号" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="urgencylevel" class="col-sm-2 control-label">紧急程度</label>
+                            <div class="col-sm-8">
+                                <select v-model="tbFromDoc.urgencylevel" class="form-control" id="urgencylevel"
+                                        readonly="readonly">
+                                    <option value="1">平办</option>
+                                    <option value="2">急办</option>
+                                    <option value="3">领导交办</option>
+                                    <option value="4">市委督办</option>
+                                    <option value="5">市政府督办</option>
+                                    <option value="6">部门督办</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="finishdate" class="col-sm-2 control-label">完成时间</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" v-model="tbFromDoc.finishdate"
+                                       placeholder="完成时间" id="finishdate" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="selectLdDiv" style="display: block">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="ldd1" class="col-sm-2 control-label">选择领导</label>
+                            <input hidden name="s2s" v-model="tbFromDoc.ldArr" id="ldArr">
+                            <div class="col-sm-10">
+                                <label class="checkbox-inline"> <input id="ldd1"
+                                                                       type="checkbox" value="陈亮"
+                                                                       name="tbFromDoc.ldArr">陈亮
+                                </label>
+
+                                <label class="checkbox-inline"> <input id="ldd2"
+                                                                       type="checkbox" value="张殿纪"
+                                                                       name="tbFromDoc.ldArr">张殿纪
+                                </label>
+
+                                <label class="checkbox-inline"> <input id="ldd3"
+                                                                       type="checkbox" value="方显启"
+                                                                       name="tbFromDoc.ldArr">方显启
+                                </label>
+
+                                <label class="checkbox-inline"> <input id="ldd4"
+                                                                       type="checkbox" value="耿成华"
+                                                                       name="tbFromDoc.ldArr">耿成华
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="row" id="zhipaiDiv" style="display: block">-->
+                <!--<div class="col-lg-12">-->
+                <!--<div class="form-group">-->
+                <!--<label class="col-sm-2 control-label">指派</label>-->
+                <!--<div class="col-sm-10" id="aaa">-->
+                <!--<button type="button" class="btn btn-primary" data-toggle="modal" id="zhipai"-->
+                <!--data-target="#dialogSelectBanLiUsers"><i class="ti-plus"></i> 选择指派人员-->
+                <!--</button>-->
+                <!--<div id="users"></div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-sm-10"><input type="text" id="xm" placeholder="输入名称进行查询！"/>
+                                <select style="width: 100px" id="dsds" @change="search">
+                                    <option v-for="unit in unitlist" :value="unit.id">{{unit.name}}</option>
+                                </select>
+                                <button type="button" class="btn btn-primary" @click="search">查询</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div>待选人员
+                                <!--<button type="button" class="btn btn-primary" @click="selectALL">全部选择</button>-->
+                            </div>
+                            <table id="ALlJqGrid"></table>
+                            <div id="ALlJqGridPager"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div id="yxry">已选人员 　
+                                <button type="button" class="btn btn-primary" @click="cancelSelectALL">全部取消选择</button>
+                            </div>
+                            <table id="hasJqGrid"></table>
+                            <div id="hsJqGridPager"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="row" id="zhipaiDiv2" style="display: block">-->
+                <!--<div class="col-lg-12">-->
+                <!--<div class="form-group">-->
+                <!--<label class="col-sm-2 control-label">指派历史</label>-->
+                <!--<div class="col-sm-10" id="bbb">-->
+                <!--<button type="button" class="btn btn-primary" data-toggle="modal"-->
+                <!--data-target="#dialogSelectedBanLiUsers"><i class="ti-plus"></i> 已指派人员-->
+                <!--</button>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div id="zhipaihistory">指派历史</div>
+                            <table id="zhipaiRyJqGrid"></table>
+                            <div id="zhipaiRyJqGridPager"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!--<div id="dialogSelectedBanLiUsers" class="modal fade bs-modal-lg" tabindex="-1"-->
+    <!--role="dialog" aria-hidden="true">-->
+    <!--<div class="modal-dialog" style="width: 660px">-->
+    <!--<div class="modal-content">-->
+    <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal"-->
+    <!--aria-hidden="true">×-->
+    <!--</button>-->
+    <!--<h4 class="modal-title">已指派人员历史</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+    <!--<div class="row">-->
+    <!--<div class="col-xs-12">-->
+    <!--<section class="main-content" style="border-style:none;">-->
+    <!--<iframe id="selectUsers22" name="selectUsers22"-->
+    <!--frameborder="0" width="100%" height="600px"></iframe>-->
+    <!--<a class="exit-offscreen"></a>-->
+    <!--</section>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--<button type="button" class="btn btn-primary" @click="doSelectUser2">关闭</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div id="dialogSelectBanLiUsers" class="modal fade bs-modal-lg" tabindex="-1"-->
+    <!--role="dialog" aria-hidden="true">-->
+    <!--<div class="modal-dialog" style="width: 760px">-->
+    <!--<div class="modal-content">-->
+    <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal"-->
+    <!--aria-hidden="true">×-->
+    <!--</button>-->
+    <!--<h4 class="modal-title">选择人员</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+    <!--<div class="row">-->
+    <!--<div class="col-xs-12">-->
+    <!--<section class="main-content" style="border-style:none;">-->
+    <!--<iframe id="selectUsers11" name="selectUsers11"-->
+    <!--frameborder="0" width="100%" height="600px"></iframe>-->
+    <!--<a class="exit-offscreen"></a>-->
+    <!--</section>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--<button type="button" class="btn btn-primary" @click="doSelectUser">关闭</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#finishdate").datepicker({
+            language: "zh-CN",
+            defaultDate: '-1M',
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            todayBtn: "linked",//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        }).on("changeDate", function (ev) {
+            Vue.set(vm.tbFromDoc, "finishdate", $('#finishdate').datepicker('getFormattedDate'));
+        });
+    });
+</script>
+<script src="${rc.contextPath}/js/tbfromdoc/tbfromdoc_zhipai.js?_${date.systemTime}"></script>
+</body>
+</html>

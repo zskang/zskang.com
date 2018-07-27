@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>书写短信息</title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp">
+    <div class="grid-btn">
+        <!--已选择人员：-->
+        <!--<input type="hidden" id="userIds"/>-->
+        <!--发送时间：-->
+        <!--<input type="text" class="form-control"-->
+               <!--style="width: 180px"-->
+               <!--placeholder="日期" id="senddate"/>-->
+        输入内容：
+        <textarea id="msg" cols="50" rows="10"></textarea>
+        <button type="button" class="btn btn-default" @click="sendingNow">立即发送</button>
+        <!--<button type="button" class="btn btn-default" @click="sendingAfter">后期发送</button>-->
+    </div>
+
+</div>
+<script src="${rc.contextPath}/js/sys/write_msg.js?_${date.systemTime}"></script>
+
+<script type="text/javascript">
+    $("#senddate").datepicker({
+        language: "zh-CN",
+        defaultDate: '-1M',
+        autoclose: true,//选中之后自动隐藏日期选择框
+        clearBtn: true,//清除按钮
+        todayBtn: "linked",//今日按钮
+        format: "yyyy-mm-dd HH:mm:ss"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+    }).on("changeDate", function (ev) {
+        Vue.set(vm.tbFromDoc, "senddate", $('#finishdate').datepicker('getFormattedDate'));
+    });
+    Vue.set(vm.tbFromDoc, "senddate", getNowFormatDate());
+</script>
+</body>
+</html>

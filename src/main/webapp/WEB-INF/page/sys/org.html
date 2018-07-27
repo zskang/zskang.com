@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>组织机构列表</title>
+#parse("sys/header.html") 
+</head>
+<body>
+<div id="rrapp">
+	<div class="grid-btn">
+		#if($shiro.hasPermission("org:save"))
+		<a class="btn btn-default" href="org_add.html">新增</a>
+		#end
+		#if($shiro.hasPermission("org:update"))
+		<button type="button"  class="btn btn-default" @click="update">修改</button>
+		#end
+		#if($shiro.hasPermission("org:delete"))
+		<button type="button" class="btn btn-default" @click="del">删除</button>
+		#end
+	</div>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+</div>
+
+<script src="${rc.contextPath}/js/sys/org.js?_${date.systemTime}"></script>
+</body>
+</html>

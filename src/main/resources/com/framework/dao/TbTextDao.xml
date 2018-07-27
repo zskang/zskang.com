@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbTextDao">
+
+    <select id="queryObject" resultType="com.framework.entity.TbTextEntity">
+SELECT
+	t.id,
+	t.createtime,
+	t.title,
+	u.xm userid,
+	t.content,
+	t.image,
+	(
+		CASE t.type
+		WHEN '1' THEN
+			'公示公告'
+		WHEN '0' THEN
+			'每日一事'
+		WHEN '2' THEN
+			'每周一悟'
+		WHEN '3' THEN
+			'问题清单'
+		END
+	) type
+FROM
+	tb_text t
+LEFT JOIN sys_user u ON t.userid = u.user_id
+WHERE
+	t.id = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.framework.entity.TbTextEntity">
+        select
+        text.id,
+        text.createtime,
+        text.title,
+        u.xm userid,
+        text.content,
+        text.image,
+        (
+          case  text.type
+                when '1' then '公示公告'
+                when '0' then '每日一事'
+                when '2' then '每周一悟'
+                when '3' then '问题清单'
+          END ) type
+        from tb_text text, sys_user  u
+        where  text.type = #{type} and text.userid=u.user_id
+        <if test="userid !=null" >
+            and   text.userid =#{userid}
+        </if>
+
+        <if test="startmonth != null">
+            and text.createtime <![CDATA[   >= #{startmonth} ]]>
+        </if>
+
+        <if test="endmonth != null">
+            and text.createtime <![CDATA[   <= #{endmonth} ]]>
+        </if>
+        ORDER  by text.createtime DESC
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+		select count(1) from tb_text text, sys_user  u
+        where text.TYPE = #{type} and text.userid=u.user_id
+        <if test="userid !=null" >
+            and text.userid =#{userid}
+        </if>
+
+        <if test="startmonth != null">
+            and text.createtime <![CDATA[   >= #{startmonth} ]]>
+        </if>
+
+        <if test="endmonth != null">
+            and text.createtime <![CDATA[   <= #{endmonth} ]]>
+        </if>
+	</select>
+
+    <insert id="save" parameterType="com.framework.entity.TbTextEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_text
+		(
+			`createtime`, 
+			`title`, 
+			`content`, 
+			`type`,
+			`userid`
+		)
+		values
+		(
+			now(),
+			#{title}, 
+			#{content}, 
+			#{type},
+			#{userid}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.framework.entity.TbTextEntity">
+        update tb_text
+        <set>
+            <if test="createtime != null">`createtime` = #{createtime},</if>
+            <if test="title != null">`title` = #{title},</if>
+            <if test="content != null">`content` = #{content},</if>
+            <if test="userid != null">`userid` = #{userid},</if>
+            <if test="type != null">`type` = #{type}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from tb_text where id = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from tb_text where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

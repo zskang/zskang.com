@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理员列表</title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp">
+    <div>
+        <label>名称：</label><input type="text" class="input" id="xm"/>
+        <label>用户名：</label><input type="text" class="input" id="username"/>
+        <label>手机号：</label><input type="text" class="input" id="mobile"/>
+        <label>职位：</label><select id="roleId" name="roleId">
+        <option value="">-请选择-</option>
+        <option value="1003">公文收发员</option>
+        <option value="1004">局长</option>
+        <option value="1005">副局长</option>
+        <option value="1006">科长</option>
+        <option value="1007">办事员</option>
+    </select>
+        <label>部门：</label>
+        <select id="unitid" >
+            <option v-for="unit in unitlist" :value="unit.id">{{unit.name}}</option>
+        </select>
+        <button type="button" class="btn btn-default" @click="search">查 询</button>
+    </div>
+    <div class="grid-btn">
+        <button type="button" class="btn btn-default" @click="sendmsg">发短信</button>
+
+    </div>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+</div>
+
+<div id="dialogWriteMsg" class="modal fade bs-modal-lg" tabindex="-1"
+     role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 660px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title">编写短信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <section class="main-content" style="border-style:none;">
+                            <iframe id="writeMsg" name="writeMsg"
+                                    frameborder="0" width="100%" height="300px"></iframe>
+                            <a class="exit-offscreen"></a>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-primary" @click="ddd">关闭</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<script src="${rc.contextPath}/js/sys/sendmsg.js?_${date.systemTime}"></script>
+</body>
+</html>

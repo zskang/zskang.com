@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbTempUserDao">
+
+    <select id="queryObject" resultType="com.framework.entity.TbTempUserEntity">
+		select * from tb_temp_user where userId = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.framework.entity.TbTempUserEntity">
+        select
+        t.`id`,
+        t.`userId`,
+        u.`username`,
+        u.`xm`,
+        u.`mobile`,
+        u.`status`,
+        u.`unitid`,
+        t.`docId`,
+        unit.`name` uname
+        from tb_temp_user t ,sys_user u ,sys_unit unit
+        where t.userId=u.user_id and u.unitid=unit.id
+        <if test="docId != null">
+            and t.docId = #{docId}
+        </if>
+
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from tb_temp_user t
+        where 1=1
+
+        <if test="docid != null">
+            and t.docId = #{docid}
+        </if>
+        <if test="mobile != null">
+            and t.mobile = #{mobile}
+        </if>
+        <if test="userId != null">
+            and t.userId = #{userId}
+        </if>
+        <if test="unitid != null">
+            and t.unitid = #{unitid}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.framework.entity.TbTempUserEntity"  useGeneratedKeys="true" keyProperty="id">
+		insert into tb_temp_user
+		(
+			`id`,
+			`userId`,
+			`username`, 
+			`xm`, 
+			`mobile`, 
+			`status`, 
+			`unitid`, 
+			`docId`
+		)
+		values
+		(
+		     null,
+			#{userid}, 
+			#{username}, 
+			#{xm}, 
+			#{mobile}, 
+			#{status}, 
+			#{unitid}, 
+			#{docid}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.framework.entity.TbTempUserEntity">
+        update tb_temp_user
+        <set>
+            <if test="username != null">`username` = #{username},</if>
+            <if test="xm != null">`xm` = #{xm},</if>
+            <if test="mobile != null">`mobile` = #{mobile},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="userid != null">`userid` = #{userid},</if>
+            <if test="unitid != null">`unitid` = #{unitid},</if>
+            <if test="docid != null">`docId` = #{docid}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from tb_temp_user   where  id=#{id}
+	</delete>
+    <delete id="deleteByDocid">
+        delete from tb_temp_user   where  docId=#{docId}
+    </delete>
+
+
+
+    <delete id="deleteBatch">
+        delete from tb_temp_user where id in
+        <foreach item="ids" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

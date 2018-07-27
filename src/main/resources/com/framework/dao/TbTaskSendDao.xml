@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbTaskSendDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TbTaskSendEntity">
+		select * from tb_task_send where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TbTaskSendEntity">
+		select t.id, s1.username fromname,s2.username toname,u.createtime,u.remarkinfo from tb_task_send t left join tb_task_send_info u on u.tb_task_send_id=t.id
+		left join sys_user s1 on s1.user_id=t.from_user_id
+		left join sys_user s2 on s2.user_id=t.to_user_id
+		where 1=1
+		<if test="taskid != null">
+			AND t.taskid=#{taskid}
+		</if>
+
+		order  by u.createtime desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_task_send t left join tb_task_send_info u on u.tb_task_send_id=t.id
+		where t.taskid=#{taskid}
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TbTaskSendEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_task_send
+		(
+			`taskid`, 
+			`from_user_id`, 
+			`to_user_id`, 
+			`dotime`, 
+			`state`
+		)
+		values
+		(
+			#{taskid}, 
+			#{fromUserId}, 
+			#{toUserId}, 
+			#{dotime}, 
+			#{state}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TbTaskSendEntity">
+		update tb_task_send 
+		<set>
+			<if test="taskid != null">`taskid` = #{taskid}, </if>
+			<if test="fromUserId != null">`from_user_id` = #{fromUserId}, </if>
+			<if test="toUserId != null">`to_user_id` = #{toUserId}, </if>
+			<if test="dotime != null">`dotime` = #{dotime}, </if>
+			<if test="state != null">`state` = #{state}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_task_send where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_task_send where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

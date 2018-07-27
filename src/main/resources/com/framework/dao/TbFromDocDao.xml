@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbFromDocDao">
+
+    <select id="queryObject" resultType="com.framework.entity.TbFromDocEntity">
+		select * from tb_from_doc where from_doc_id = #{value}
+	</select>
+
+    <select id="queryObjectByUUID" resultType="com.framework.entity.TbFromDocEntity">
+		select * from tb_from_doc where uuid = #{uuid}
+	</select>
+
+    <select id="queryList4Export" resultType="com.framework.entity.TbFromDocEntity">
+        select t.* from (
+        SELECT
+        doc.uuid,
+        doc.count,
+        doc.entityclassnumber,
+        doc.filenumber,
+        doc.years,
+        doc.filesequence,
+        doc.receiveddate,
+        doc.finishdate,
+        doc.fondsnumber,
+        doc.from_doc_id,
+        doc.fromdepartment,
+        doc.pagenumber,
+        (
+        CASE doc.secretlevel
+        WHEN '0' THEN '绝密'
+        WHEN '1' THEN '机密'
+        WHEN '2' THEN '秘密' END
+        ) secretlevel,
+        doc.storageperiod,
+        doc.subjectword,
+        doc.title,
+        doc.transactnumber,
+        c2.key urgencylevel,
+        doc.urgencylevel urgencylevelCode,
+        c1.key filetype,
+        concat_ws(select * from )
+        FROM
+        tb_from_doc doc
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'filetype'
+        ) c1 ON c1.value= doc.filetype
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'urgencylevel'
+        ) c2 ON c2.value= doc.urgencylevel
+        ) t
+
+    </select>
+
+    <select id="queryList4kz" resultType="com.framework.entity.TbFromDocEntity">
+        select t.* from (
+        SELECT
+        doc.uuid,
+        doc.count,
+        doc.create_time,
+        doc.entityclassnumber,
+        doc.filenumber,
+        doc.years,
+        doc.filesequence,
+        doc.finishdate,
+        doc.fondsnumber,
+        doc.receiveddate,
+        doc.from_doc_id,
+        doc.fromdepartment,
+        doc.pagenumber,
+        (
+        CASE doc.secretlevel
+        WHEN '0' THEN '绝密'
+        WHEN '1' THEN '机密'
+        WHEN '2' THEN '秘密'
+        ELSE '普通' END
+        ) secretlevel,
+        doc.storageperiod,
+        doc.subjectword,
+        doc.title,
+        doc.transactnumber,
+        c2.key urgencylevel,
+        c1.key filetype
+        FROM
+        tb_from_doc doc
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'filetype'
+        ) c1 ON c1.value= doc.filetype
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'urgencylevel'
+        ) c2 ON c2.value= doc.urgencylevel
+        ) t
+        ,tb_banli banli
+        where t.from_doc_id=banli.doc_id
+        and ( banli.to_user_id=#{userid} or banli.from_user_id=#{userid} )
+        <if test="title != null">
+            and (t.title like #{title} or t.subjectword LIKE #{title} )
+        </if>
+        order by t.create_time DESC
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryList4Batch" resultType="com.framework.entity.TbFromDocEntity">
+        select t.* from (
+                SELECT
+                doc.uuid,
+                doc.count,
+                doc.create_time,
+                doc.entityclassnumber,
+                doc.filenumber,
+                doc.years,
+                doc.filesequence,
+                doc.receiveddate,
+                doc.finishdate,
+                doc.fondsnumber,
+                doc.from_doc_id,
+                doc.fromdepartment,
+                doc.pagenumber,
+                (
+                CASE doc.secretlevel
+                WHEN '0' THEN '绝密'
+                WHEN '1' THEN '机密'
+                WHEN '2' THEN '秘密' END
+                ) secretlevel,
+                doc.storageperiod,
+                doc.subjectword,
+                doc.title,
+                doc.transactnumber,
+                c2.key urgencylevel,
+                doc.urgencylevel urgencylevelCode,
+                c1.key filetype
+                FROM
+                tb_from_doc doc
+                LEFT JOIN (
+                SELECT
+                config.value,
+                config.key
+                FROM
+                sys_config config
+                WHERE
+                config.typ = 'filetype'
+                ) c1 ON c1.value= doc.filetype
+                LEFT JOIN (
+                SELECT
+                config.value,
+                config.key
+                FROM
+                sys_config config
+                WHERE
+                config.typ = 'urgencylevel'
+                ) c2 ON c2.value= doc.urgencylevel
+        ) t
+        WHERE  t.finishdate >now()
+    </select>
+
+
+    <select id="queryList" resultType="com.framework.entity.TbFromDocEntity">
+        select t.* from (
+        SELECT
+        doc.uuid,
+        doc.count,
+        doc.create_time,
+        doc.entityclassnumber,
+        doc.filenumber,
+        doc.years,
+        doc.filesequence,
+        doc.receiveddate,
+        doc.finishdate,
+        doc.fondsnumber,
+        doc.from_doc_id,
+        doc.fromdepartment,
+        doc.pagenumber,
+        (
+        CASE doc.secretlevel
+        WHEN '0' THEN '绝密'
+        WHEN '1' THEN '机密'
+        WHEN '2' THEN '秘密' END
+        ) secretlevel,
+        doc.storageperiod,
+        doc.subjectword,
+        doc.title,
+        doc.transactnumber,
+        c2.key urgencylevel,
+        doc.urgencylevel urgencylevelCode,
+        c1.key filetype
+        FROM
+        tb_from_doc doc
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'filetype'
+        ) c1 ON c1.value= doc.filetype
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'urgencylevel'
+        ) c2 ON c2.value= doc.urgencylevel
+        ) t
+
+        where 1=1
+        <if test="title != null">
+            and (t.title like #{title} or t.subjectword LIKE #{title} )
+        </if>
+        order by t.create_time DESC
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryList4ld" resultType="com.framework.entity.TbFromDocEntity">
+        select t.* from (
+        SELECT
+        doc.uuid,
+        doc.count,
+        doc.create_time,
+        doc.entityclassnumber,
+        doc.filenumber,
+        doc.years,
+        doc.filesequence,
+        doc.finishdate,
+        doc.receiveddate,
+        doc.fondsnumber,
+        doc.from_doc_id,
+        doc.fromdepartment,
+        doc.pagenumber,
+        (
+        CASE doc.secretlevel
+        WHEN '0' THEN '绝密'
+        WHEN '1' THEN '机密'
+        WHEN '2' THEN '秘密' END
+        ) secretlevel,
+        doc.storageperiod,
+        doc.subjectword,
+        doc.title,
+        doc.transactnumber,
+        c2.key urgencylevel,
+        c1.key filetype
+        FROM
+        tb_from_doc doc
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'filetype'
+        ) c1 ON c1.value= doc.filetype
+        LEFT JOIN (
+        SELECT
+        config.value,
+        config.key
+        FROM
+        sys_config config
+        WHERE
+        config.typ = 'urgencylevel'
+        ) c2 ON c2.value= doc.urgencylevel
+        ) t
+        ,tb_from_doc_pishi pishi
+        where t.from_doc_id=pishi.from_doc_id
+        and pishi.user_id=#{userid}
+        <if test="title != null">
+            and (t.title like #{title} or t.subjectword LIKE #{title} )
+        </if>
+        order by t.create_time DESC
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+
+    <select id="queryMaxRegistNumber" resultType="String">
+		SELECT
+                filesequence
+            FROM
+                tb_from_doc
+            WHERE
+                from_doc_id = (
+                    SELECT
+                        max(t.from_doc_id)
+                    FROM
+                        tb_from_doc t
+                )
+	</select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from tb_from_doc t where 1=1
+        <if test="title != null">
+            and ( t.title like #{title} or t.subjectword LIKE #{title} )
+        </if>
+    </select>
+    <select id="queryTotal4kz" resultType="int">
+        select count(*) from tb_from_doc t
+        ,tb_banli banli
+        where t.from_doc_id=banli.doc_id and ( banli.to_user_id=#{userid} or banli.from_user_id=#{userid} )
+        <if test="title != null">
+            and ( t.title like #{title} or t.subjectword LIKE #{title} )
+        </if>
+    </select>
+    <select id="queryTotal4ld" resultType="int">
+        select count(*) from tb_from_doc t ,tb_from_doc_pishi pishi
+        where t.from_doc_id=pishi.from_doc_id
+        and pishi.user_id=#{userid}
+        <if test="title != null">
+            and ( t.title like #{title} or t.subjectword LIKE #{title} )
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.framework.entity.TbFromDocEntity" useGeneratedKeys="true"
+            keyProperty="from_doc_id">
+		insert into tb_from_doc
+		(
+		    `from_doc_id`,
+			`create_time`,
+			`years`,
+			`filenumber`,
+			`urgencylevel`, 
+			`fondsnumber`, 
+			`entityclassnumber`, 
+			`storageperiod`, 
+			`title`, 
+			`fromdepartment`, 
+			`subjectword`,
+			`count`, 
+			`secretlevel`,
+			`pagenumber`,
+            `receiveddate`,
+			`filesequence`, 
+			`transactnumber`, 
+			`finishdate`, 
+			`filetype`,
+			`uuid`
+		)
+		values
+		(
+		    NULL ,
+			now(),
+			#{years},
+			#{filenumber},
+			#{urgencylevel}, 
+			#{fondsnumber}, 
+			#{entityclassnumber}, 
+			#{storageperiod}, 
+			#{title}, 
+			#{fromdepartment},
+			#{subjectword}, 
+			#{count}, 
+			#{secretlevel},
+			#{pagenumber},
+			#{receiveddate},
+			#{filesequence}, 
+			#{transactnumber}, 
+			#{finishdate}, 
+			#{filetype},
+			#{uuid}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.framework.entity.TbFromDocEntity">
+        update tb_from_doc
+        <set>
+            <if test="urgencylevel != null">`urgencylevel` = #{urgencylevel},</if>
+            <if test="finishdate != null">`finishdate` = #{finishdate},</if>
+            <if test="years != null">`years` = #{years},</if>
+            <if test="filenumber != null">`filenumber` = #{filenumber},</if>
+            <if test="fondsnumber != null">`fondsnumber` = #{fondsnumber},</if>
+            <if test="entityclassnumber != null">`entityclassnumber` = #{entityclassnumber},</if>
+            <if test="storageperiod != null">`storageperiod` = #{storageperiod},</if>
+            <if test="title != null">`title` = #{title},</if>
+            <if test="fromdepartment != null">`fromdepartment` = #{fromdepartment},</if>
+            <if test="subjectword != null">`subjectword` = #{subjectword},</if>
+            <if test="count != null">`count` = #{count},</if>
+            <if test="secretlevel != null">`secretlevel` = #{secretlevel},</if>
+            <if test="pagenumber != null">`pagenumber` = #{pagenumber},</if>
+            <if test="receiveddate != null">`receiveddate` = #{receiveddate},</if>
+            <if test="filesequence != null">`filesequence` = #{filesequence},</if>
+            <if test="transactnumber != null">`transactnumber` = #{transactnumber},</if>
+            <if test="filetype != null">`filetype` = #{filetype}</if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <delete id="delete">
+		delete from tb_from_doc where uuid = #{uuid}
+	</delete>
+
+    <delete id="deleteBatchByUUid">
+        delete from tb_from_doc where uuid in
+        <foreach item="uuid" collection="array" open="(" separator="," close=")">
+            #{uuid}
+        </foreach>
+    </delete>
+
+</mapper>

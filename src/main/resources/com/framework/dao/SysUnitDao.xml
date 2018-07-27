@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.SysUnitDao">
+
+	<select id="queryObject" resultType="com.framework.entity.SysUnitEntity">
+		select * from sys_unit where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.SysUnitEntity">
+		select * from sys_unit 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from sys_unit 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.SysUnitEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_unit
+		(
+			`name`, 
+			`code`, 
+			`contact`, 
+			`mobile`, 
+			`address`, 
+			`email`, 
+			`web`, 
+			`parentId`, 
+			`hasChildren`, 
+			`system`, 
+			`enabled`, 
+			`createTime`, 
+			`type`
+		)
+		values
+		(
+			#{name}, 
+			#{code}, 
+			#{contact}, 
+			#{mobile}, 
+			#{address}, 
+			#{email}, 
+			#{web}, 
+			#{parentid}, 
+			#{haschildren}, 
+			#{system}, 
+			#{enabled}, 
+			#{createtime}, 
+			#{type}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.SysUnitEntity">
+		update sys_unit 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="contact != null">`contact` = #{contact}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="web != null">`web` = #{web}, </if>
+			<if test="parentid != null">`parentId` = #{parentid}, </if>
+			<if test="haschildren != null">`hasChildren` = #{haschildren}, </if>
+			<if test="system != null">`system` = #{system}, </if>
+			<if test="enabled != null">`enabled` = #{enabled}, </if>
+			<if test="createtime != null">`createTime` = #{createtime}, </if>
+			<if test="type != null">`type` = #{type}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from sys_unit where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from sys_unit where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

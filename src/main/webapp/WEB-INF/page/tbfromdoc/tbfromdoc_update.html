@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <input type="hidden" class="form-control" v-model="tbFromDoc.uuid" placeholder=""/>
+        <input type="hidden" class="form-control" v-model="tbFromDoc.fromDocId" placeholder=""/>
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">来文标题<font color="red">*</font></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="title" name="title" style="width: 380px"
+                               v-model="tbFromDoc.title" placeholder="来文标题">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="subjectword" class="col-sm-2 control-label">主题词</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="subjectword" class="form-control" v-model="tbFromDoc.subjectword"
+                               style="width: 380px"
+                               placeholder="主题词"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="subjectword" class="col-sm-2 control-label">收文日期</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="tbFromDoc.receiveddate"
+                               style="width: 180px"
+                               placeholder="收文日期" id="receiveddate"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="count" class="col-sm-2 control-label">文件份数</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="count" class="form-control" v-model="tbFromDoc.count"
+                               style="width: 180px"
+                               placeholder="文件份数"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="years" class="col-sm-2 control-label">年度</label>
+                    <div class="col-sm-8">
+                        <select v-model="tbFromDoc.years" class="form-control" id="years" style="width: 180px">
+                            <option value="2017">2017年</option>
+                            <option value="2018">2018年</option>
+                            <option value="2019">2019年</option>
+                            <option value="2020">2020年</option>
+                            <option value="2021">2021年</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-6">
+                <div class="form-group" id="filenumberDiv">
+                    <label for="filenumber" class="col-sm-2 control-label">文号</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="filenumber" class="form-control" name="filenumber"
+                               style="width: 180px"
+                               v-model="tbFromDoc.filenumber"
+                               placeholder="文号"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="filetype" class="col-sm-2 control-label">文件类型</label>
+                    <div class="col-sm-8">
+                        <select v-model="tbFromDoc.filetype" class="form-control" id="filetype" name="filetype"
+                                style="width: 180px">
+                            <option value="3">文件</option>
+                            <option value="1">转办件</option>
+                            <option value="2">信访件</option>
+                            <option value="4">申请</option>
+                            <option value="5">批示件</option>
+                            <option value="6">批示</option>
+                            <option value="7">明电</option>
+                            <option value="8">函件</option>
+                            <option value="9">复印件</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="filesequence" class="col-sm-2 control-label">文件序号</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" style="width: 180px" v-model="tbFromDoc.filesequence"
+                               id="filesequence" disabled/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="transactnumber" class="col-sm-2 control-label">办文编号<font
+                            color="red">*</font></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" v-model="tbFromDoc.transactnumber"
+                               style="width: 180px"
+                               id="transactnumber" placeholder="办文编号"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="storageperiod" class="col-sm-2 control-label">保管期限</label>
+                    <div class="col-sm-8">
+                        <select v-model="tbFromDoc.storageperiod" class="form-control" id="storageperiod"
+                                style="width: 180px">
+                            <option value="10年">10年</option>
+                            <option value="30年">30年</option>
+                            <option value="短期">短期</option>
+                            <option value="永久">永久</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="pagenumber" class="col-sm-2 control-label">页数</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" v-model="tbFromDoc.pagenumber" id="pagenumber"
+                               style="width: 180px"
+                               name="pagenumber" placeholder="页数"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="urgencylevel" class="col-sm-2 control-label">紧急程度</label>
+                    <div class="col-sm-8">
+                        <select v-model="tbFromDoc.urgencylevel" class="form-control" id="urgencylevel"
+                                style="width: 180px">
+                            <option value="1">平办</option>
+                            <option value="2">急办</option>
+                            <option value="3">领导交办</option>
+                            <option value="4">市委督办</option>
+                            <option value="5">市政府督办</option>
+                            <option value="6">部门督办</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="finishdate" class="col-sm-2 control-label">完成时间</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" v-model="tbFromDoc.finishdate"
+                               style="width: 180px"
+                               placeholder="完成时间" id="finishdate"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="fondsnumber" class="col-sm-2 control-label">全案号</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" v-model="tbFromDoc.fondsnumber" id="fondsnumber"
+                               placeholder="全案号" style="width: 180px"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="entityclassnumber" class="col-sm-2 control-label">实体分类号</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" v-model="tbFromDoc.entityclassnumber"
+                               style="width: 180px"
+                               id="entityclassnumber" placeholder="实体分类号"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="fromdepartment" class="col-sm-2 control-label">来文机关</label>
+                    <div class="col-sm-6">
+                        <select v-model="tbFromDoc.fromdepartment" class="form-control" style="width: 180px"
+                                id="fromdepartment"
+                                onchange="showOther()">
+                            <option value="安徽省教育厅">安徽省教育厅</option>
+                            <option value="亳州市政府">亳州市政府</option>
+                            <option value="亳州市政府督查室">亳州市政府督查室</option>
+                            <option value="亳州市委">亳州市委</option>
+                            <option value="亳州市委督查室">亳州市委督查室</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="other" style="display: none">
+                            <input class="form-control" id="other2" style="width: 180px"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="secretlevel" class="col-sm-2 control-label">密级</label>
+                    <div class="col-sm-8">
+                        <select v-model="tbFromDoc.secretlevel" class="form-control" id="secretlevel"
+                                style="width: 180px">
+                            <option value="0">绝密</option>
+                            <option value="1">机密</option>
+                            <option value="2">秘密</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<script src="${rc.contextPath}/js/tbfromdoc/tbfromdoc_update.js?_${date.systemTime}"></script>
+</body>
+</html>

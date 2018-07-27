@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.SysUserDao">
+    <select id="queryObject" resultType="com.framework.entity.SysUserEntity">
+		select * from sys_user where user_id = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.framework.entity.SysUserEntity">
+        select s.* ,u.name unitname ,r.role_name rolename from sys_user s left join sys_unit u on s.unitid=u.id
+        left join sys_user_role sr on sr.user_id=s.user_id left join sys_role r on
+        r.role_id=sr.role_id where 1=1
+
+        <if test="unitid != null">
+            AND s.unitid=#{unitid}
+        </if>
+
+        <if test="mobile != null">
+            AND s.mobile like #{mobile}
+        </if>
+
+        <if test="status != null">
+            AND s.status = #{status}
+        </if>
+
+        <if test="username != null">
+            AND s.username like #{username}
+        </if>
+
+        <if test="xm != null">
+            AND s.xm like #{xm}
+        </if>
+
+        <if test="roleId != null">
+            AND r.role_id = #{roleId}
+        </if>
+
+
+        order by s.user_id desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+
+    <select id="queryList4zhipai" resultType="com.framework.entity.SysUserEntity">
+        select s.* ,u.name unitname ,r.role_name rolename,banli.state state
+             from sys_user s
+        left join sys_unit u on s.unitid=u.id
+        left join sys_user_role sr on sr.user_id=s.user_id
+        left join sys_role r on
+        r.role_id=sr.role_id
+        left join tb_banli banli on banli.to_user_id = s.user_id
+        left JOIN tb_from_doc doc on doc.from_doc_id=banli.doc_id
+        where 1=1 and doc.uuid=#{uuid}
+
+        <if test="unitid != null">
+            AND s.unitid=#{unitid}
+        </if>
+
+        <if test="mobile != null">
+            AND s.mobile like #{mobile}
+        </if>
+
+        <if test="status != null">
+            AND s.status = #{status}
+        </if>
+
+        <if test="username != null">
+            AND s.username like #{username}
+        </if>
+
+        <if test="xm != null">
+            AND s.xm like #{xm}
+        </if>
+
+        <if test="roleId != null">
+            AND r.role_id = #{roleId}
+        </if>
+
+        order by s.user_id desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from sys_user s
+
+        left join sys_unit u on s.unitid=u.id
+        left join sys_user_role sr on sr.user_id=s.user_id
+        left join sys_role r on r.role_id=sr.role_id
+        where 1=1
+        <if test="unitid != null">
+            AND s.unitid=#{unitid}
+        </if>
+
+        <if test="mobile != null">
+            AND s.mobile like #{mobile}
+        </if>
+
+        <if test="status != null">
+            AND s.status = #{status}
+        </if>
+
+        <if test="username != null">
+            AND s.username like #{unitid}
+        </if>
+
+        <if test="xm != null">
+            AND s.xm like #{xm}
+        </if>
+
+        <if test="roleId != null">
+            AND r.role_id = #{roleId}
+        </if>
+
+        order by s.user_id desc
+
+    </select>
+
+
+    <select id="queryTotal4zhipai" resultType="int">
+        select count(*)
+          from sys_user s
+        left join sys_unit u on s.unitid=u.id
+        left join sys_user_role sr on sr.user_id=s.user_id
+        left join sys_role r on r.role_id=sr.role_id
+        left join tb_banli banli on banli.to_user_id = s.user_id
+        left JOIN tb_from_doc doc on doc.from_doc_id=banli.doc_id
+        where 1=1 and doc.uuid=#{uuid}
+
+        <if test="unitid != null">
+            AND s.unitid=#{unitid}
+        </if>
+
+        <if test="mobile != null">
+            AND s.mobile like #{mobile}
+        </if>
+
+        <if test="status != null">
+            AND s.status = #{status}
+        </if>
+
+        <if test="username != null">
+            AND s.username like #{unitid}
+        </if>
+
+        <if test="xm != null">
+            AND s.xm like #{xm}
+        </if>
+
+        <if test="roleId != null">
+            AND r.role_id = #{roleId}
+        </if>
+
+        order by s.user_id desc
+
+    </select>
+
+    <!-- 查询用户的所有权限 -->
+    <select id="queryAllPerms" resultType="String">
+		select m.perms from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		where ur.user_id = #{userId}
+	</select>
+
+    <!-- 查询用户的所有菜单ID -->
+    <select id="queryAllMenuId" resultType="Long">
+		select m.menu_id from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		where ur.user_id = #{userId}
+	</select>
+
+    <select id="queryByUserName" resultType="com.framework.entity.SysUserEntity">
+		select * from sys_user where username = #{username} or mobile=#{username}
+	</select>
+
+
+    <insert id="save" parameterType="com.framework.entity.SysUserEntity" useGeneratedKeys="true" keyProperty="userId">
+		insert into sys_user
+		(
+			`user_id`, 
+			`username`,
+			`xm`,
+			`password`, 
+			`email`, 
+			`mobile`, 
+			`status`, 
+			`create_time`,
+			unitid,
+			ifadmin
+		)
+		values
+		(
+			#{userId}, 
+			#{username},
+			#{xm},
+			#{password}, 
+			#{email}, 
+			#{mobile}, 
+			#{status}, 
+			now(),
+			#{unitid},
+			#{ifadmin}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.framework.entity.SysUserEntity">
+        update sys_user
+        <set>
+            <if test="username != null">`username` = #{username},</if>
+            <if test="xm != null">`xm` = #{xm},</if>
+            <if test="password != null">`password` = #{password},</if>
+            <if test="email != null">`email` = #{email},</if>
+            <if test="mobile != null">`mobile` = #{mobile},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="unitid != null">`unitid` = #{unitid},</if>
+            <if test="ifadmin != null">`ifadmin` = #{ifadmin},</if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <select id="queryLds" resultType="com.framework.entity.SysUserEntity">
+			 SELECT
+				u.*
+			FROM
+				sys_user u,
+				sys_user_role ur,
+				sys_role r
+			WHERE
+				u.user_id = ur.user_id
+			AND ur.role_id = r.role_id
+			AND r.role_id ='1008'
+	</select>
+
+    <update id="updatePassword" parameterType="map">
+		update sys_user set `password` = #{newPassword} 
+			where user_id = #{userId} and password = #{password}
+	</update>
+
+    <delete id="deleteBatch">
+        delete from sys_user where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+        ;
+        delete from sys_user_role where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+    <select id="queryObjectByName" parameterType="map" resultType="com.framework.entity.SysUserEntity">
+        SELECT * from sys_user where xm=#{name} LIMIT 0 ,1
+    </select>
+
+    <select id="getKeZhang" parameterType="map" resultType="com.framework.entity.SysUserEntity">
+		select * from sys_user u,sys_user_role ur,sys_role r
+		where u.unitid=#{unitid} and u.user_id=ur.user_id and r.role_id= ur.role_id and r.role_id=#{role_id}
+	</select>
+</mapper>

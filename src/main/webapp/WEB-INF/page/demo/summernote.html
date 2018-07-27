@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>summernote</title> #parse("sys/header.html")
+<script src="${rc.contextPath}/statics/plugins/echart/echarts.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#summernote').summernote({
+			placeholder : '请输入文章内容',
+			  toolbar:[
+		            ['style',['bold','italic','underline','clear']],
+		            ['fontsize',['fontsize']],
+		            ['para',['ul','ol','paragraph']],
+		            ['color',['color']]
+		        ],
+		        callbacks:{
+		            onImageUpload: function(files, editor, $editable) {
+		                sendFile(files,editor,$editable);
+		            }
+		        }
+		});
+		function sendFile(files,editor,$editable){
+			//这里files是因为我设置了可上传多张图片，所以需要依次添加到formData中
+			    var formData = new FormData();
+			    for(f in files){
+			        formData.append("file", files[f]);
+			    }
+			 
+			    $.ajax({
+			        data: formData,
+			        type: "POST",
+			        url: "/uploadMultipleFile",
+			        cache: false,
+			        contentType: false,
+			        processData: false,
+			        success: function(imageUrl) {
+			            for(i in imageUrl){
+			            $('.summernote').summernote('editor.insertImage',imageUrl[i]);
+			            }
+			 
+			        },
+			        error: function() {
+			            console.log("uploadError");
+			        }
+			    })
+			}
+	});
+</script>
+</head>
+<body>
+	<div class="summernote" id="summernote"></div>
+</body>
+</html>
+
+
+
+
+

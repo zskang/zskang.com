@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">年度</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.nd" id="nd" placeholder="年度" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">发文类别<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <select v-model="tbSendDoc.doctype" class="form-control" id="doctype" readonly>
+                    <option value="1">文件</option>
+                    <option value="2">函件</option>
+                    <option value="3">教党</option>
+                    <option value="4">教提</option>
+                    <option value="5">教议</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">发文时间<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.fwsj" id="fwsj" placeholder="发文时间" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">登记时间<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.djsj" id="djsj" placeholder="登记时间" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">序号<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.xh" id="xh"  readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">文号<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.wh" id="wh" placeholder="文号" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">题名<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.timing" placeholder="题名" readonly/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">责任者<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.zrz" placeholder="责任者" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">签发人<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.qfr" placeholder="签发人" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">保管期限<font color="red">*</font></div>
+            <div class="col-sm-10">
+                <select v-model="tbSendDoc.bgqx" class="form-control" id="bgqx" readonly>
+                    <option value="10年">10年</option>
+                    <option value="30年">30年</option>
+                    <option value="短期">短期</option>
+                    <option value="永久">永久</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">类别</div>
+            <div class="col-sm-10">
+                <select v-model="tbSendDoc.lb" class="form-control" id="lb" name="lb" readonly>
+                    <option value="文件">文件</option>
+                    <option value="转办件">转办件</option>
+                    <option value="信访件">信访件</option>
+                    <option value="申请">申请</option>
+                    <option value="批示件">批示件</option>
+                    <option value="批示">批示</option>
+                    <option value="明电">明电</option>
+                    <option value="函件">函件</option>
+                    <option value="复印件">复印件</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">主题词</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.ztc" placeholder="主题词" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">全宗号</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.qzh" placeholder="全宗号" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">实体分类号</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.stflh" placeholder="实体分类号" readonly/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">密级</div>
+            <div class="col-sm-10">
+                <select v-model="tbSendDoc.mj" class="form-control" id="mj" readonly>
+                    <option value="绝密">绝密</option>
+                    <option value="机密">机密</option>
+                    <option value="秘密">秘密</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">页数</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.yeshu" placeholder="页数" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">是否归档</div>
+            <div class="col-sm-10">
+                <select v-model="tbSendDoc.sfgd" class="form-control" id="sfgd" readonly>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">主送单位</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.zsdw" placeholder="主送单位" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">选送单位</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.xsdw" placeholder="选送单位" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">分发情况</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.ffqk" placeholder="分发情况" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">传阅情况</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.cyqk" placeholder="传阅情况" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">处理情况</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.clqk" placeholder="处理情况" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">备注</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="tbSendDoc.beizhu" placeholder="备注" readonly/>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+    function getNowYeay() {
+        var date = new Date();
+        return date.getFullYear();
+    }
+    $(function () {
+       // Vue.set(vm.tbSendDoc, "jjcd", "平办");
+        Vue.set(vm.tbSendDoc, "lb", "文件");
+        Vue.set(vm.tbSendDoc, "bgqx", "10年");
+    //    Vue.set(vm.tbFromDoc, "fromdepartment", "安徽省教育厅");
+        Vue.set(vm.tbSendDoc, "nd", getNowYeay());
+        $("#fwsj").datepicker({
+            language: "zh-CN",
+            defaultDate: '-1M',
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            todayBtn: "linked",//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        }).on("changeDate", function (ev) {
+            Vue.set(vm.tbSendDoc, "fwsj", $('#fwsj').datepicker('getFormattedDate'));
+        });
+        Vue.set(vm.tbSendDoc, "fwsj", getNowFormatDate());
+
+
+        $("#djsj").datepicker({
+            language: "zh-CN",
+            defaultDate: '-1M',
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            todayBtn: "linked",//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        }).on("changeDate", function (ev) {
+            Vue.set(vm.tbSendDoc, "djsj", $('#djsj').datepicker('getFormattedDate'));
+        });
+        Vue.set(vm.tbSendDoc, "djsj", getNowFormatDate());
+    });
+</script>
+<script src="${rc.contextPath}/js/tbsenddoc/tbsenddoc_add.js?_${date.systemTime}"></script>
+</body>
+</html>

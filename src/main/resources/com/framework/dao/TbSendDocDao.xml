@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbSendDocDao">
+
+    <select id="queryObject" resultType="com.framework.entity.TbSendDocEntity">
+		select * from tb_send_doc where id = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.framework.entity.TbSendDocEntity">
+        select * from tb_send_doc t
+        where 1=1
+        <if test="wh != null">
+            and t.wh like #{wh}
+        </if>
+        <if test="tm != null">
+            and t.timing like #{tm}
+        </if>
+        order by t.createtime DESC
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+	select count(*) from tb_send_doc
+</select>
+
+
+    <select id="queryMaxRegistNumber" resultType="String">
+		SELECT
+		djh
+		FROM
+		tb_send_doc
+		WHERE
+		id = (
+		SELECT
+		max(t.id)
+		FROM
+		tb_send_doc t
+		 where t.nd= #{nd}
+		and t.doctype=#{doctype}
+		) and nd= #{nd}
+		and doctype=#{doctype}
+	</select>
+
+    <insert id="save" parameterType="com.framework.entity.TbSendDocEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_send_doc
+		(
+			`djh`, 
+			`nd`, 
+			`fwsj`, 
+			`djsj`, 
+			`wh`, 
+			`jjcd`, 
+			`qzh`, 
+			`stflh`, 
+			`bgqx`, 
+			`timing`, 
+			`zrz`, 
+			`qfr`, 
+			`ztc`, 
+			`lb`, 
+			`mj`, 
+			`yeshu`, 
+			`sfgd`, 
+			`zsdw`, 
+			`xsdw`, 
+			`ffqk`, 
+			`cyqk`, 
+			`clqk`, 
+			`beizhu`, 
+			`createtime`, 
+			`creator`, 
+			`unitid`,
+			`doctype`,
+			`status`
+		)
+		values
+		(
+			#{djh}, 
+			#{nd}, 
+			#{fwsj}, 
+			#{djsj}, 
+			#{wh}, 
+			#{jjcd}, 
+			#{qzh}, 
+			#{stflh}, 
+			#{bgqx}, 
+			#{timing}, 
+			#{zrz}, 
+			#{qfr}, 
+			#{ztc}, 
+			#{lb}, 
+			#{mj}, 
+			#{yeshu}, 
+			#{sfgd}, 
+			#{zsdw}, 
+			#{xsdw}, 
+			#{ffqk}, 
+			#{cyqk}, 
+			#{clqk}, 
+			#{beizhu}, 
+			#{createtime}, 
+			#{creator}, 
+			#{unitid},
+			#{doctype},
+			#{status}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.framework.entity.TbSendDocEntity">
+        update tb_send_doc
+        <set>
+            <if test="djh != null">`djh` = #{djh},</if>
+            <if test="nd != null">`nd` = #{nd},</if>
+            <if test="fwsj != null">`fwsj` = #{fwsj},</if>
+            <if test="djsj != null">`djsj` = #{djsj},</if>
+            <if test="wh != null">`wh` = #{wh},</if>
+            <if test="jjcd != null">`jjcd` = #{jjcd},</if>
+            <if test="qzh != null">`qzh` = #{qzh},</if>
+            <if test="stflh != null">`stflh` = #{stflh},</if>
+            <if test="bgqx != null">`bgqx` = #{bgqx},</if>
+            <if test="timing != null">`timing` = #{timing},</if>
+            <if test="zrz != null">`zrz` = #{zrz},</if>
+            <if test="qfr != null">`qfr` = #{qfr},</if>
+            <if test="ztc != null">`ztc` = #{ztc},</if>
+            <if test="lb != null">`lb` = #{lb},</if>
+            <if test="mj != null">`mj` = #{mj},</if>
+            <if test="yeshu != null">`yeshu` = #{yeshu},</if>
+            <if test="sfgd != null">`sfgd` = #{sfgd},</if>
+            <if test="zsdw != null">`zsdw` = #{zsdw},</if>
+            <if test="xsdw != null">`xsdw` = #{xsdw},</if>
+            <if test="ffqk != null">`ffqk` = #{ffqk},</if>
+            <if test="cyqk != null">`cyqk` = #{cyqk},</if>
+            <if test="clqk != null">`clqk` = #{clqk},</if>
+            <if test="beizhu != null">`beizhu` = #{beizhu},</if>
+            <if test="createtime != null">`createtime` = #{createtime},</if>
+            <if test="creator != null">`creator` = #{creator},</if>
+            <if test="unitid != null">`unitid` = #{unitid},</if>
+            <if test="doctype != null">`doctype` = #{doctype},</if>
+            <if test="status != null">`status` = #{status}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from tb_send_doc where id = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from tb_send_doc where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

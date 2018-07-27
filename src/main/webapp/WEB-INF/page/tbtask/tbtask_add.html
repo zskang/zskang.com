@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">普通，会议，急办，领导交办，督办</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbTask.tasktype" placeholder="普通，会议，急办，领导交办，督办"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbTask.title" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbTask.content" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbTask.createtime" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbTask.extrafile" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbTask.createuserid" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/tbtask/tbtask_add.js?_${date.systemTime}"></script>
+</body>
+</html>

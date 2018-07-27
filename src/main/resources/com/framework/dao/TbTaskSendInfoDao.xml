@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbTaskSendInfoDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TbTaskSendInfoEntity">
+		select * from tb_task_send_info where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TbTaskSendInfoEntity">
+		SELECT a.unitname, a.username staticname,a.user_id staticid,a.mryscount,b.mzywcount FROM
+
+		(
+		SELECT u.name unitname,s.username,s.user_id ,count(t.userid) mryscount from sys_user s
+		left join sys_unit u on u.id=s.unitid
+		LEFT JOIN tb_text t  on s.user_id=t.userid
+		and t.type='0'
+		<if test="startmonth != null">
+			and t.createtime <![CDATA[   >= #{startmonth} ]]>
+		</if>
+
+		<if test="endmonth != null">
+			and t.createtime <![CDATA[   <= #{endmonth} ]]>
+		</if>
+		GROUP BY s.user_id
+		) a LEFT JOIN
+		(
+		SELECT u.name unitname, s.username,s.user_id ,count(t.userid) mzywcount from sys_user s
+		left join sys_unit u on u.id=s.unitid
+		LEFT JOIN tb_text t  on s.user_id=t.userid
+		and t.type='2'
+		<if test="startmonth != null">
+			and t.createtime <![CDATA[   >= #{startmonth} ]]>
+		</if>
+
+		<if test="endmonth != null">
+			and t.createtime <![CDATA[   <= #{endmonth} ]]>
+		</if>
+
+		GROUP BY s.user_id
+		) b ON a.user_id=b.user_id
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from sys_user
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TbTaskSendInfoEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_task_send_info
+		(
+			`createtime`, 
+			`tb_task_send_id`, 
+			`remarkinfo`
+		)
+		values
+		(
+			#{createtime}, 
+			#{tbTaskSendId}, 
+			#{remarkinfo}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TbTaskSendInfoEntity">
+		update tb_task_send_info 
+		<set>
+			<if test="createtime != null">`createtime` = #{createtime}, </if>
+			<if test="tbTaskSendId != null">`tb_task_send_id` = #{tbTaskSendId}, </if>
+			<if test="remarkinfo != null">`remarkinfo` = #{remarkinfo}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_task_send_info where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_task_send_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>人员列表</title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp">
+    <div class="grid-btn">
+             <input type="hidden" id="uuid" />
+        名称：<input type="text" id="xm" placeholder="输入名称进行查询！"/>
+        选单位：<select v-model="unitid" style="width: 100px" id="dsds" @change="search">
+            <option v-for="unit in unitlist" :value="unit.id">{{unit.name}}</option>
+        </select>
+        <button type="button" class="btn btn-primary" @click="search">查询</button>
+        <button type="button" class="btn btn-primary" @click="ok">  指派   </button>
+    </div>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+</div>
+
+<script src="${rc.contextPath}/js/tbfromdoc/selectUsers.js?_${date.systemTime}"></script>
+</body>
+</html>

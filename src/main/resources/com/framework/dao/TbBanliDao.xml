@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbBanliDao">
+
+    <select id="queryObject" resultType="com.framework.entity.TbBanliEntity">
+		select * from tb_banli where id = #{value}
+	</select>
+
+
+    <select id="queryList4task" resultType="com.framework.entity.TbBanliEntity">
+        select * from tb_banli where 1=1
+        <if test="docId != null">
+            and doc_id= #{docId}
+        </if>
+        <if test="fromUserId != null">
+            and from_user_id= #{fromUserId}
+        </if>
+        <if test="toUserId != null">
+            and to_user_id= #{toUserId}
+        </if>
+        and state !=2
+
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryList" resultType="com.framework.entity.TbBanliEntity">
+        select
+        t.id,
+        doc.title title,
+        u1.xm from_user_id,
+        t.do_time,
+        doc.uuid
+        from tb_banli t
+        left join tb_from_doc doc on t.doc_id=doc.from_doc_id
+        left join sys_user u1 on t.from_user_id=u1.user_id
+        where 1=1
+
+        <if test="toUserId != null">
+            and t.to_user_id= #{toUserId}
+        </if>
+
+        <if test="state != null">
+            and t.state= #{state}
+        </if>
+
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from tb_banli where 1=1
+
+        <if test="toUserId != null">
+            and to_user_id= #{toUserId}
+        </if>
+
+        <if test="state != null">
+            and state= #{state}
+        </if>
+
+    </select>
+
+
+    <select id="queryList2" resultType="com.framework.entity.TbBanliEntity">
+        select
+        t.id,
+        doc.title title,
+        u1.xm from_user_id,
+        t.do_time,
+        doc.uuid
+        from tb_banli t
+        left join tb_from_doc doc on t.doc_id=doc.from_doc_id
+        left join sys_user u1 on t.from_user_id=u1.user_id
+        where 1=1
+
+        <if test="toUserId != null">
+            and t.to_user_id= #{toUserId}
+        </if>
+
+        and t.state !=0
+
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+
+    </select>
+    <select id="queryTotal2" resultType="int">
+        select count(*) from tb_banli where 1=1
+
+        <if test="toUserId != null">
+            and to_user_id= #{toUserId}
+        </if>
+        and state !=0
+    </select>
+
+    <insert id="save" parameterType="com.framework.entity.TbBanliEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_banli
+		(
+			`doc_id`, 
+			`do_time`, 
+			`do_type`, 
+			`from_user_id`, 
+			`to_user_id`, 
+			`remark`
+		)
+		values
+		(
+			#{docId}, 
+			#{doTime}, 
+			#{doType}, 
+			#{fromUserId}, 
+			#{toUserId}, 
+			#{remark}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.framework.entity.TbBanliEntity">
+        update tb_banli
+        <set>
+            <if test="docId != null">`doc_id` = #{docId},</if>
+            <if test="doTime != null">`do_time` = #{doTime},</if>
+            <if test="doType != null">`do_type` = #{doType},</if>
+            <if test="fromUserId != null">`from_user_id` = #{fromUserId},</if>
+            <if test="toUserId != null">`to_user_id` = #{toUserId},</if>
+            <if test="remark != null">`remark` = #{remark}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateByMap">
+        update tb_banli
+        <set>
+            <if test="state != null">`state` = #{state}</if>
+        </set>
+        where `doc_id` = #{docId} and `to_user_id`= #{toUserId}
+    </update>
+
+    <delete id="delete">
+		delete from tb_banli where id = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from tb_banli where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchBydocId">
+		delete from tb_banli where  doc_id = #{doc_id}
+	</delete>
+
+
+</mapper>

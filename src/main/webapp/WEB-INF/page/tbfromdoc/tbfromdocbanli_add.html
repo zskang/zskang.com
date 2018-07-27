@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">来文id</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.fromDocId" placeholder="来文id"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">办理人员id</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.userId" placeholder="办理人员id"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">接收时间</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.receivedtime" placeholder="接收时间"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">是否查阅    0:否 1:是</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.read" placeholder="是否查阅    0:否 1:是"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">是否反馈    0:否 1:是</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.feedback" placeholder="是否反馈    0:否 1:是"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">预留1</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.spare1" placeholder="预留1"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">预留3</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.spare2" placeholder="预留3"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">备注</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.comment" placeholder="备注"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">文件来源用户id</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.fromUserId" placeholder="文件来源用户id"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">指派到的用户id</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.toUserId" placeholder="指派到的用户id"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">阅读时间</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.readtime" placeholder="阅读时间"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">反馈时间</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.feedbacktime" placeholder="反馈时间"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">指派时间</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.sendtime" placeholder="指派时间"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">是否指派   0:否 1:是</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tbFromDocBanli.send" placeholder="是否指派   0:否 1:是"/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/tbfromdocbanli/tbfromdocbanli_add.js?_${date.systemTime}"></script>
+</body>
+</html>

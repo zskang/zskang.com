@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp">
+	<div class="grid-btn">
+		<!--<a class="btn btn-default" href="tbtasksendinfo_add.html">新增</a>-->
+		<!--<button type="button"  class="btn btn-default" @click="update">修改</button>-->
+		<!--<button type="button" class="btn btn-default" @click="del">删除</button>-->
+		<!--<input type="text" class="form-control" v-model="choose.month"
+			   style="width: 180px"
+			   placeholder="选择月份" id="month"/>-->
+		<label>开始时间：</label><input v-model="choose.month" type="text" class="input" id="month"/>
+		<label>结束时间：</label><input v-model="choose.month1" type="text" class="input" id="month1"/>
+		<button type="button" class="btn btn-primary" @click="search">查 询</button>
+		<button type="button" class="btn btn-primary" @click="exportDatas">导出</button>
+	</div>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+</div>
+<input type="hidden" id="typeparent">
+<input type="hidden" id="staticidparent">
+
+<!--<div id="menuLayer" style="display: none;padding:10px;">
+	<ul id="menuTree" class="ztree"></ul>
+</div>-->
+
+<div id="dialogSelectUpload" class="modal fade bs-modal-lg" tabindex="-1"
+	 role="dialog" aria-hidden="true">
+	<div class="modal-dialog" style="width: 660px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×
+				</button>
+				<h4 class="modal-title">每日一事</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<section class="main-content" style="border-style:none;">
+							<iframe id="uploadFrame" name="uploadFrame"
+									frameborder="0" width="100%" height="600px"></iframe>
+							<a class="exit-offscreen"></a>
+						</section>
+					</div>
+				</div>
+			</div>
+			<!--<div class="modal-footer">
+				<button type="button" class="btn btn-primary" @click="selectFile">关闭</button>
+			</div>-->
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+    function getNowYeay() {
+        var date = new Date();
+        return date.getFullYear();
+    }
+    $(function () {
+
+
+
+
+        $("#month").datepicker({
+            language: "zh-CN",
+            defaultDate: '-1M',
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            todayBtn: "linked",//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        }).on("changeDate", function (ev) {
+            Vue.set(vm.choose, "month", $('#month').datepicker('getFormattedDate'));
+        });
+
+        $("#month1").datepicker({
+            language: "zh-CN",
+            defaultDate: '-1M',
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            todayBtn: "linked",//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        }).on("changeDate", function (ev) {
+            Vue.set(vm.choose, "month1", $('#month1').datepicker('getFormattedDate'));
+        });
+//        Vue.set(vm.choose, "month", getNowFormatDate());
+    });
+</script>
+
+<script src="${rc.contextPath}/js/tbtasksendinfo/tbtasksendinfo.js?_${date.systemTime}"></script>
+</body>
+</html>

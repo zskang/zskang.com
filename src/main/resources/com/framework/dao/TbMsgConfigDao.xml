@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TbMsgConfigDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TbMsgConfigEntity">
+		select * from tb_msg_config where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TbMsgConfigEntity">
+		select
+		config.`id`,
+		c2.key urgencylevel,
+		(case config.`sfzpsend` WHEN 'Y' then '是' WHEN 'N' THEN '否' END ) sfzpsend,
+		config.`tqday`,
+		(case config.`sfdtsend`  WHEN 'Y' then '是' WHEN 'N' THEN '否' END ) sfdtsend,
+		(case config.`sfseesend`  WHEN 'Y' then '是' WHEN 'N' THEN '否' END ) sfseesend,
+		(case config.`sffankuisend` WHEN 'Y' then '是' WHEN 'N' THEN '否' END ) sffankuisend
+		from tb_msg_config config
+		LEFT JOIN (
+		 SELECT
+		config.value,
+		config.key
+		FROM
+		sys_config config
+		WHERE
+		config.typ = 'urgencylevel'
+		) c2 ON c2.value= config.urgencylevel
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_msg_config 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TbMsgConfigEntity"  useGeneratedKeys="true" keyProperty="id">
+		insert into tb_msg_config
+		(
+			`id`, 
+			`urgencylevel`, 
+			`sfzpsend`, 
+			`tqday`, 
+			`sfdtsend`, 
+			`sfseesend`, 
+			`sffankuisend`
+		)
+		values
+		(
+			null,
+			#{urgencylevel}, 
+			#{sfzpsend}, 
+			#{tqday}, 
+			#{sfdtsend}, 
+			#{sfseesend}, 
+			#{sffankuisend}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TbMsgConfigEntity">
+		update tb_msg_config 
+		<set>
+			<if test="urgencylevel != null">`urgencylevel` = #{urgencylevel}, </if>
+			<if test="sfzpsend != null">`sfzpsend` = #{sfzpsend}, </if>
+			<if test="tqday != null">`tqday` = #{tqday}, </if>
+			<if test="sfdtsend != null">`sfdtsend` = #{sfdtsend}, </if>
+			<if test="sfseesend != null">`sfseesend` = #{sfseesend}, </if>
+			<if test="sffankuisend != null">`sffankuisend` = #{sffankuisend}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_msg_config where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_msg_config where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
